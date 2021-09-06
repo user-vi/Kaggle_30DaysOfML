@@ -5,7 +5,7 @@ stages:
     - data/train_anomaly.csv
     - src/prepare.py
     outs:
-    - data
+    - data/prepare
   train:
     cmd: python src/train_ridge.py
     deps:
