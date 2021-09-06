@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 
 def prepared():
     input = '../data/train_anomaly.csv'
-    output = '../data/prepared'
+    output = '../data'
 
     df = pd.read_csv(input, index_col='id')
     df['target'] = 100 * df['target']
