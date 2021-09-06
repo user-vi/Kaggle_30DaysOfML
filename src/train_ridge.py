@@ -12,8 +12,8 @@ def train_model():
     """
     train and save pickle file of model
     """
-    input = '../data/prepared/prepared_train.csv'
-    output = '../models'
+    input = './data/prepared/prepared_train.csv'
+    output = './models'
 
     train = pd.read_csv(input, index_col='id')
 
