@@ -1,0 +1,15 @@
+stages:
+  prepare:
+    cmd: python src/prepare.py 
+    deps:
+    - data/train_anomaly.csv
+    - src/prepare.py
+    outs:
+    - data/prepared
+  train:
+    cmd: python src/train_ridge.py
+    deps:
+    - data/prepared_train.csv
+    - src/train_ridge.py
+    outs:
+    - model_ridge.pkl
