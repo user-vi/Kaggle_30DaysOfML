@@ -22,11 +22,11 @@ stages:
       md5: 26635528e4c868d6767b1f9030a4b9d8
       size: 9448083
     - path: src/train_ridge.py
-      md5: bf1dd9274103e8105db539c804b20e3a
-      size: 1022
+      md5: b7fb600ef3e5533eeb500688b92f734c
+      size: 1319
     outs:
     - path: models/model_ridge.pkl
-      md5: 211939a199a7f6b44d9a62ef55f8f889
+      md5: 98dbc2b48e4803811f3d3b9493b55bcc
       size: 13701
   evaluate:
     cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model
@@ -36,12 +36,12 @@ stages:
       md5: bc0bbc4020098bb27ab0fd57414532b4
       size: 85031783
     - path: models/model_ridge.pkl
-      md5: 211939a199a7f6b44d9a62ef55f8f889
+      md5: 98dbc2b48e4803811f3d3b9493b55bcc
       size: 13701
     - path: src/evaluate.py
-      md5: c62315fd01218f01a72c7b008b63dbed
-      size: 1125
+      md5: e12407cdf6b1c95ec536b79ceb59a63c
+      size: 1204
     outs:
     - path: scores.json
-      md5: 2647dddfcab6693cb7fcef495f4009cd
-      size: 32
+      md5: 34c8a3b2ecc5610d3122686418ff3bb4
+      size: 33

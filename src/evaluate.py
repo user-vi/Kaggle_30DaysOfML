@@ -3,6 +3,7 @@ import json
 import pickle
 import os
 from sklearn.metrics import mean_squared_error
+from mlflow import log_metric
 from CustomPipeline import *
 
 
@@ -35,6 +36,8 @@ def predict(args):
     with open(output, "w") as fd:
         json.dump({"rmse": rmse}, fd, indent=4)
 
+    # mlflow metric
+    log_metric("rmse", rmse)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
