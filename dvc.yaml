@@ -1,20 +1,20 @@
 stages:
   prepare:
-    cmd: python src/prepare.py
+    cmd: python src/prepare.py --input ./data/train_anomaly.csv --output ./data/prepare
     deps:
     - data/train_anomaly.csv
     - src/prepare.py
     outs:
     - data/prepare
   train:
-    cmd: python src/train_ridge.py
+    cmd: python src/train_ridge.py --input ./data/prepare/prepared_train.csv --output ./models/model_ridge.pkl
     deps:
     - data/prepare/prepared_train.csv
     - src/train_ridge.py
     outs:
     - models/model_ridge.pkl
   evaluate:
-    cmd: python src/evaluate.py
+    cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model ./models/model_ridge.pkl --output ./scores.json
     deps:
     - data/prepare/prepared_val.csv
     - models/model_ridge.pkl

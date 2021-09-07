@@ -6,14 +6,17 @@ from sklearn.metrics import mean_squared_error
 from CustomPipeline import *
 
 
-def predict():
+def predict(args):
     """
     eval model
     """
-    input_df = './data/prepare/prepared_val.csv'
-    input_model = './models/model_ridge.pkl'
-    # output = './evaluate'
-    output = './scores.json'
+    # input_df = './data/prepare/prepared_val.csv'
+    # input_model = './models/model_ridge.pkl'
+    # output = './scores.json'
+
+    input_df = args.input_data
+    input_model = args.input_model
+    output = args.output
 
     df = pd.read_csv(input_df, index_col='id')
 
@@ -34,4 +37,10 @@ def predict():
 
 
 if __name__ == '__main__':
-    predict()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input-data", required=True)
+    parser.add_argument("--input-model", required=True)
+    parser.add_argument("--output", required=True)
+    args = parser.parse_args()
+    predict(args)
+    # predict()

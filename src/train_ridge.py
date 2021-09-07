@@ -8,12 +8,15 @@ from CustomPipeline import *
 
 N_BINS = 16
 
-def train_model():
+def train_model(args):
     """
     train and save pickle file of model
     """
-    input = './data/prepare/prepared_train.csv'
-    output = './models'
+    # input = './data/prepare/prepared_train.csv'
+    # output = './models'
+
+    input = args.input
+    output = args.output
 
     train = pd.read_csv(input, index_col='id')
 
@@ -25,21 +28,20 @@ def train_model():
     model.fit(X, y)
 
     # create dir if it isn't exists
-    if not os.path.exists(output):
-        os.makedirs(output)
+    # if not os.path.exists(output):
+    #     os.makedirs(output)
     # save
-    with open(output + '/model_ridge.pkl', 'wb') as f:
+    with open(output, 'wb') as f:
         pickle.dump(model, f)
 
 
 if __name__ == '__main__':
-    # parse arguments from console
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("--input", required=True)
-    # parser.add_argument("--output", required=True)
-    # args = parser.parse_args()
-    # train_model(args)
-    train_model()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", required=True)
+    parser.add_argument("--output", required=True)
+    args = parser.parse_args()
+    train_model(args)
+    # train_model()
 
 
 

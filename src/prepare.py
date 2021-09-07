@@ -3,9 +3,12 @@ import os
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-def prepared():
-    input = './data/train_anomaly.csv'
-    output = './data/prepare'
+def prepared(args):
+    # input = './data/train_anomaly.csv'
+    # output = './data/prepare'
+
+    input = args.input
+    output = args.output
 
     df = pd.read_csv(input, index_col='id')
     df['target'] = 100 * df['target']
@@ -23,10 +26,9 @@ def prepared():
 
 
 if __name__ == '__main__':
-    # parse arguments from console
-    # parser = argparse.ArgumentParser()
-    # parser.add_argument("--input", required=True)
-    # parser.add_argument("--output", required=True)
-    # args = parser.parse_args()
-    # prepared(args)
-    prepared()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--input", required=True)
+    parser.add_argument("--output", required=True)
+    args = parser.parse_args()
+    prepared(args)
+    # prepared()
