@@ -1,6 +1,6 @@
 stages:
   prepare:
-    cmd: python src/prepare.py 
+    cmd: python src/prepare.py
     deps:
     - data/train_anomaly.csv
     - src/prepare.py
@@ -13,3 +13,12 @@ stages:
     - src/train_ridge.py
     outs:
     - models/model_ridge.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/prepare/prepared_val.csv
+    - models/model_ridge.pkl
+    - src/evaluate.py
+    metrics:
+    - scores.json:
+        cache: false
