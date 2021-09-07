@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py --input ./data/train_anomaly.csv --output ./data/prepare
+    deps:
+    - path: data/train_anomaly.csv
+      md5: 0cd0553754e93dc7028f91c8412d465c
+      size: 95604148
+    - path: src/prepare.py
+      md5: d6c30b96e26ae50bc3823420841f77de
+      size: 963
+    outs:
+    - path: data/prepare
+      md5: 6fffa965d02347788de51fc511cad36b.dir
+      size: 94479866
+      nfiles: 2
+  train:
+    cmd: python src/train_ridge.py --input ./data/prepare/prepared_train.csv --output
+      ./models/model_ridge.pkl
+    deps:
+    - path: data/prepare/prepared_train.csv
+      md5: 26635528e4c868d6767b1f9030a4b9d8
+      size: 9448083
+    - path: src/train_ridge.py
+      md5: bf1dd9274103e8105db539c804b20e3a
+      size: 1022
+    outs:
+    - path: models/model_ridge.pkl
+      md5: 211939a199a7f6b44d9a62ef55f8f889
+      size: 13701
+  evaluate:
+    cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model
+      ./models/model_ridge.pkl --output ./scores.json
+    deps:
+    - path: data/prepare/prepared_val.csv
+      md5: bc0bbc4020098bb27ab0fd57414532b4
+      size: 85031783
+    - path: models/model_ridge.pkl
+      md5: 211939a199a7f6b44d9a62ef55f8f889
+      size: 13701
+    - path: src/evaluate.py
+      md5: c62315fd01218f01a72c7b008b63dbed
+      size: 1125
+    outs:
+    - path: scores.json
+      md5: 2647dddfcab6693cb7fcef495f4009cd
+      size: 32
