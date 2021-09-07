@@ -1,0 +1,4 @@
+outs:
+- md5: 0cd0553754e93dc7028f91c8412d465c
+  size: 95604148
+  path: train_anomaly.csv
