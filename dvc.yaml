@@ -10,7 +10,7 @@ stages:
   train_lr:
     cmd: python src/train_ridge.py --input ./data/prepare/prepared_train.csv --output ./models/model_ridge.pkl
     deps:
-    - data/prepare/prepared_train.csv
+    - data/prepare
     - src/train_ridge.py
     outs:
     - models/model_ridge.pkl:
@@ -18,7 +18,7 @@ stages:
   train_xgb:
     cmd: python src/train_xgb.py --input ./data/prepare/prepared_train.csv --output ./models/model_xgb.pkl
     deps:
-    - data/prepare/prepared_train.csv
+    - data/prepare
     - src/train_xgb.py
     outs:
     - models/model_xgb.pkl:
@@ -26,7 +26,7 @@ stages:
   evaluate:
     cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model ./models/model_ridge.pkl --output ./scores.json
     deps:
-    - data/prepare/prepared_val.csv
+    - data/prepare
     - models/model_ridge.pkl
     - src/evaluate.py
     metrics:
