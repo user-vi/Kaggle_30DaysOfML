@@ -7,8 +7,8 @@ stages:
       md5: 0cd0553754e93dc7028f91c8412d465c
       size: 95604148
     - path: src/prepare.py
-      md5: d6c30b96e26ae50bc3823420841f77de
-      size: 963
+      md5: 24959801e5997b9920b3b62d37c6080b
+      size: 974
     outs:
     - path: data/prepare
       md5: 6fffa965d02347788de51fc511cad36b.dir
@@ -36,12 +36,26 @@ stages:
       md5: bc0bbc4020098bb27ab0fd57414532b4
       size: 85031783
     - path: models/model_ridge.pkl
-      md5: 98dbc2b48e4803811f3d3b9493b55bcc
-      size: 13701
+      md5: a406510cc7adc9d2e21538520dde35fe
+      size: 13702
     - path: src/evaluate.py
-      md5: 6efa2d4bb80600cf4f6cb0ecd607389c
-      size: 1219
+      md5: 266811a56dccc1908b140a4be335a33c
+      size: 1130
     outs:
     - path: scores.json
-      md5: a78a7f3f0ead037e9d59d6c8db960f7e
+      md5: 929f660d457ac763714bf379c9f17d7d
       size: 33
+  train_lr:
+    cmd: python src/train_ridge.py --input ./data/prepare/prepared_train.csv --output
+      ./models/model_ridge.pkl
+    deps:
+    - path: data/prepare/prepared_train.csv
+      md5: 26635528e4c868d6767b1f9030a4b9d8
+      size: 9448083
+    - path: src/train_ridge.py
+      md5: 81fc19e7da567620835b26a7220c42a3
+      size: 1203
+    outs:
+    - path: models/model_ridge.pkl
+      md5: a406510cc7adc9d2e21538520dde35fe
+      size: 13702

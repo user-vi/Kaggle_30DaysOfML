@@ -19,7 +19,7 @@ stages:
     cmd: python src/train_xgb.py --input ./data/prepare/prepared_train.csv --output ./models/model_xgb.pkl
     deps:
     - data/prepare/prepared_train.csv
-    - src/model_xgb.py
+    - src/train_xgb.py
     outs:
     - models/model_xgb.pkl:
         cache: false
