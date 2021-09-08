@@ -24,10 +24,7 @@ stages:
     - models:
         cache: false
   train_final:
-    cmd: python src/final_model.py \
-    -- models ./models/model_ridge.pkl ./models/model_xgb.pkl \
-    --input ./data/prepare/prepared_val.csv \
-    --output ./models/final_model.pkl
+    cmd: python src/final_model.py -- models ./models/model_ridge.pkl ./models/model_xgb.pkl --input ./data/prepare/prepared_val.csv --output ./models/final_model.pkl
     deps:
       - data/prepare
       - models
