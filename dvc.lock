@@ -39,9 +39,9 @@ stages:
       md5: 98dbc2b48e4803811f3d3b9493b55bcc
       size: 13701
     - path: src/evaluate.py
-      md5: e12407cdf6b1c95ec536b79ceb59a63c
-      size: 1204
+      md5: 6efa2d4bb80600cf4f6cb0ecd607389c
+      size: 1219
     outs:
     - path: scores.json
-      md5: 34c8a3b2ecc5610d3122686418ff3bb4
+      md5: a78a7f3f0ead037e9d59d6c8db960f7e
       size: 33

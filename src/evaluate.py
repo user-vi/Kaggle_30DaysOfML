@@ -1,9 +1,7 @@
 import argparse
 import json
 import pickle
-import os
 from sklearn.metrics import mean_squared_error
-from mlflow import log_metric
 from CustomPipeline import *
 
 
@@ -28,7 +26,7 @@ def predict(args):
         model = pickle.load(fd)
 
     pred = model.predict(X)
-    rmse = mean_squared_error(y, pred)
+    rmse = mean_squared_error(y, pred, squared=False)
 
     # create dir if it isn't exists
     # mode = 'a' if os.path.exists(output) else 'w'
@@ -36,8 +34,6 @@ def predict(args):
     with open(output, "w") as fd:
         json.dump({"rmse": rmse}, fd, indent=4)
 
-    # mlflow metric
-    log_metric("rmse", rmse)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -1,6 +1,7 @@
 import argparse
 import os
 import pandas as pd
+import dvc
 from sklearn.model_selection import train_test_split
 
 def prepared(args):

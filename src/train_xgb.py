@@ -1,11 +1,9 @@
 import argparse
 import yaml
 import pickle
-from sklearn import linear_model
+import xgboost
 from CustomPipeline import *
 
-
-N_BINS = 16
 
 def train_model(args, params):
     """
@@ -22,11 +20,11 @@ def train_model(args, params):
 
     train = pd.read_csv(input, index_col='id')
 
-    X = train.query("target > 600").drop(["target"], axis=1)
-    y = train.query("target > 600")["target"]
+    X = train.drop(["target"], axis=1)
+    y = train["target"]
 
-    lr = linear_model.Ridge(**params)
-    model = LinearWrapper(lr, bins_linear=N_BINS)
+    xgb = xgboost.XGBRegressor(**params)
+    model = XGBWrapper(xgb)
     model.fit(X, y)
 
     # create dir if it isn't exists
@@ -43,7 +41,7 @@ if __name__ == '__main__':
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
-    with open('params_model_linear.yaml', 'r') as f:
+    with open('params_model_xgb.yaml', 'r') as f:
         params = yaml.load(f, Loader=yaml.FullLoader)
 
     train_model(args, params)

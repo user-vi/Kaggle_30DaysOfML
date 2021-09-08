@@ -6,6 +6,8 @@ from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import PowerTransformer
 from sklearn.preprocessing import KBinsDiscretizer
+from sklearn.feature_selection import SelectFromModel
+from sklearn import linear_model
 from catboost import Pool
 
 
@@ -83,8 +85,8 @@ class LinearWrapper(CustomModelWrapper):
 
         pipeline_num = Pipeline(steps=[
             ('imputer', SimpleImputer(strategy='median')),
-            ('scaling', StandardScaler()),
             ('normal', PowerTransformer()),
+            ('scaling', StandardScaler()),
             ('bins', KBinsDiscretizer(n_bins=self.bins))
         ])
         pipeline_cat = Pipeline(steps=[
@@ -126,12 +128,11 @@ class XGBWrapper(CustomModelWrapper):
 
         pipeline_num = Pipeline(steps=[
             ('imputer', SimpleImputer(strategy='median')),
-            ('scaling', StandardScaler()),
             ('normal', PowerTransformer()),
+            ('scaling', StandardScaler()),
         ])
         pipeline_cat = Pipeline(steps=[
-            ('encoding', OneHotEncoder(handle_unknown='ignore')),
-            #             ('encoding', OrdinalEncoder()),
+            ('encoding', OneHotEncoder(handle_unknown='ignore')), #OrdinalEncoder()
             ('imputer', SimpleImputer(strategy='most_frequent')),
         ])
         preprocessor = ColumnTransformer(
@@ -144,6 +145,9 @@ class XGBWrapper(CustomModelWrapper):
     def fit(self, X: pd.DataFrame, y: pd.Series):
         preprocessor = self.get_preprocessor(X)
         self.pipeline = Pipeline(steps=[('preprocessor', preprocessor),
+                                        ('feature_selection', SelectFromModel(linear_model.Lasso(alpha=0.6,
+                                                                                                 random_state=1,
+                                                                                                 positive=True))),
                                         ('model', self.model),
                                         ])
         self.pipeline.fit(X, y)
