@@ -20,8 +20,8 @@ class CustomPipeline:
     def get_preprocessor(self):
         pipeline_num = Pipeline(steps=[
             ('imputer', SimpleImputer(strategy='median')),
-            ('scaling', StandardScaler()),
             ('normal', PowerTransformer()),
+            ('scaling', StandardScaler()),
             ('bins', KBinsDiscretizer(n_bins=self.n_bins))
         ])
 
@@ -132,8 +132,8 @@ class XGBWrapper(CustomModelWrapper):
             ('scaling', StandardScaler()),
         ])
         pipeline_cat = Pipeline(steps=[
-            ('encoding', OneHotEncoder(handle_unknown='ignore')), #OrdinalEncoder()
             ('imputer', SimpleImputer(strategy='most_frequent')),
+            ('encoding', OneHotEncoder(handle_unknown='ignore')), #OrdinalEncoder()
         ])
         preprocessor = ColumnTransformer(
             transformers=[

@@ -13,7 +13,7 @@ stages:
     - data/prepare
     - src/train_ridge.py
     outs:
-    - models/model_ridge.pkl:
+    - models:
         cache: false
   train_xgb:
     cmd: python src/train_xgb.py --input ./data/prepare/prepared_train.csv --output ./models/model_xgb.pkl
@@ -21,13 +21,25 @@ stages:
     - data/prepare
     - src/train_xgb.py
     outs:
-    - models/model_xgb.pkl:
+    - models:
         cache: false
+  train_final:
+    cmd: python src/final_model.py \
+    -- models ./models/model_ridge.pkl ./models/model_xgb.pkl \
+    --input ./data/prepare/prepared_val.csv \
+    --output ./models/final_model.pkl
+    deps:
+      - data/prepare
+      - models
+      - src/final_model.py
+    outs:
+      - models/final_model.pkl:
+          cache: false
   evaluate:
-    cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model ./models/model_ridge.pkl --output ./scores.json
+    cmd: python src/evaluate.py --input-data ./data/prepare/prepared_val.csv --input-model ./models/final_model.pkl --output ./scores.json
     deps:
     - data/prepare
-    - models/model_ridge.pkl
+    - models/final_model.pkl
     - src/evaluate.py
     metrics:
     - scores.json:
