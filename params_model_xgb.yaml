@@ -1,0 +1,3 @@
+eval_metric: 'rmse'
+n_estimators: 5000
+max_depth: 6
