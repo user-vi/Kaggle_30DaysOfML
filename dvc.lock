@@ -49,9 +49,10 @@ stages:
     cmd: python src/train_ridge.py --input ./data/prepare/prepared_train.csv --output
       ./models/model_ridge.pkl
     deps:
-    - path: data/prepare/prepared_train.csv
-      md5: 26635528e4c868d6767b1f9030a4b9d8
-      size: 9448083
+    - path: data/prepare
+      md5: 6fffa965d02347788de51fc511cad36b.dir
+      size: 94479866
+      nfiles: 2
     - path: src/train_ridge.py
       md5: 81fc19e7da567620835b26a7220c42a3
       size: 1203
@@ -59,3 +60,39 @@ stages:
     - path: models/model_ridge.pkl
       md5: a406510cc7adc9d2e21538520dde35fe
       size: 13702
+  train_xgb:
+    cmd: python src/train_xgb.py --input ./data/prepare/prepared_train.csv --output
+      ./models/model_xgb.pkl
+    deps:
+    - path: data/prepare
+      md5: 6fffa965d02347788de51fc511cad36b.dir
+      size: 94479866
+      nfiles: 2
+    - path: src/train_xgb.py
+      md5: eab0f7929c2076f2389840d7e6f92162
+      size: 1106
+    outs:
+    - path: models/model_xgb.pkl
+      md5: 6a1053ade58e8229770d753186a2aaef
+      size: 23062418
+  train_final:
+    cmd: python src/final_model.py --models ./models/model_ridge.pkl ./models/model_xgb.pkl
+      --input ./data/prepare/prepared_val.csv --output ./models/final_model.pkl
+    deps:
+    - path: data/prepare
+      md5: 6fffa965d02347788de51fc511cad36b.dir
+      size: 94479866
+      nfiles: 2
+    - path: models/model_ridge.pkl
+      md5: a406510cc7adc9d2e21538520dde35fe
+      size: 13702
+    - path: models/model_xgb.pkl
+      md5: 6a1053ade58e8229770d753186a2aaef
+      size: 23062418
+    - path: src/final_model.py
+      md5: b1e094e7d2a64effa65d83bf90f26d37
+      size: 1321
+    outs:
+    - path: models/final_model.pkl
+      md5: 82017daab7395af9f08c7c41410dfd02
+      size: 436

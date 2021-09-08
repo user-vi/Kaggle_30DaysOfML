@@ -7,7 +7,7 @@ from sklearn import linear_model
 from CustomPipeline import *
 
 
-def train_model(args, params):
+def train_model(args):
     """
     train and save pickle file of model
 
@@ -22,13 +22,14 @@ def train_model(args, params):
     output = args.output
 
     val = pd.read_csv(val, index_col='id')
+    X = val.drop('target', axis=1)
 
     X_estimator = pd.DataFrame()
 
     for i, path in enumerate(models):
         with open(path, "rb") as fd:
             model = pickle.load(fd)
-            pred = model.predict(val)
+            pred = model.predict(X)
             X_estimator[str(i)] = pred
 
 
@@ -50,10 +51,7 @@ if __name__ == '__main__':
     parser.add_argument("--output", required=True)
     args = parser.parse_args()
 
-    with open('params_model_linear.yaml', 'r') as f:
-        params = yaml.load(f, Loader=yaml.FullLoader)
-
-    train_model(args, params)
+    train_model(args)
     # train_model()
 
 
